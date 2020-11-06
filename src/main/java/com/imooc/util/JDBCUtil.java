@@ -1,7 +1,9 @@
 package com.imooc.util;
 
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.Properties;
 
 /**
  * JDBC工具类
@@ -21,10 +23,21 @@ public class JDBCUtil {
      */
     public static Connection getConnection() throws Exception {
 
-        String url = "jdbc:mysql:///spring_data";
-        String user = "root";
-        String password = "root";
-        String driverClass = "com.mysql.jdbc.Driver";
+//        String url = "jdbc:mysql:///spring_data";
+//        String user = "root";
+//        String password = "root";
+//        String driverClass = "com.mysql.jdbc.Driver";
+
+        InputStream inputStream = JDBCUtil.class.getClassLoader().getResourceAsStream("db.properties");
+        Properties properties = new Properties();
+        // 加载inputStream的数据
+        properties.load(inputStream);
+
+        String url = properties.getProperty("jdbc.url");
+        String user = properties.getProperty("jdbc.user");
+        String password = properties.getProperty("jdbc.password");
+        String driverClass = properties.getProperty("jdbc.driverClass");
+
         Class.forName(driverClass);
         Connection connection = DriverManager.getConnection(url, user, password);
         return connection;
