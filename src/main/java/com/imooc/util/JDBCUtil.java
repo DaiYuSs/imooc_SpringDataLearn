@@ -1,8 +1,7 @@
 package com.imooc.util;
 
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
+import java.sql.*;
 import java.util.Properties;
 
 /**
@@ -41,5 +40,38 @@ public class JDBCUtil {
         Class.forName(driverClass);
         Connection connection = DriverManager.getConnection(url, user, password);
         return connection;
+    }
+
+    /**
+     * 释放DB相关的资源
+     *
+     * @param resultSet
+     * @param statement
+     * @param connection
+     */
+    public static void relsease(ResultSet resultSet, Statement statement, Connection connection) {
+        if (resultSet != null) {
+            try {
+                resultSet.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (statement != null) {
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
