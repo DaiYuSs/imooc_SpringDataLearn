@@ -7,6 +7,9 @@ import org.junit.Before;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author ljj
  * @version 1.0
@@ -33,5 +36,31 @@ public class EmployeeRepositoryTest extends TestCase {
     public void testFindByName() {
         Employee employee = employeeRepository.findByName("zhangsan");
         System.out.println(employee);
+    }
+
+    public void testFindByNameStartingWithAndAgeLessThan() {
+        List<Employee> employees = employeeRepository.findByNameStartingWithAndAgeLessThan("test", 22);
+
+        for (Employee employee : employees) {
+            System.out.println(employee);
+        }
+    }
+
+    public void testFindByNameEndingWithAndAgeLessThan() {
+        List<Employee> employees = employeeRepository.findByNameEndingWithAndAgeLessThan("6", 23);
+
+        for (Employee employee : employees) {
+            System.out.println(employee);
+        }
+    }
+
+    public void testFindByNameInOrAgeLessThan() {
+        ArrayList<String> names = new ArrayList<>();
+        names.add("t");
+        List<Employee> employees = employeeRepository.findByNameInOrAgeLessThan(names, 22);
+
+        for (Employee employee : employees) {
+            System.out.println(employee);
+        }
     }
 }
